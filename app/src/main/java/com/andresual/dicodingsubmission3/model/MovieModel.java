@@ -3,7 +3,7 @@ package com.andresual.dicodingsubmission3.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MovieModel implements Parcelable {
+public class MovieModel {
 
     private String popularity;
     private String voteCount;
@@ -121,55 +121,5 @@ public class MovieModel implements Parcelable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    protected MovieModel(Parcel in) {
-        popularity = in.readString();
-        voteCount = in.readString();
-        video = in.readString();
-        posterPath = in.readString();
-        id = in.readString();
-        adult = in.readString();
-        backdropPath = in.readString();
-        originalLanguage = in.readString();
-        originalTitle = in.readString();
-        title = in.readString();
-        voteAverage = in.readString();
-        overview = in.readString();
-        releaseDate = in.readString();
-    }
-
-    public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
-        @Override
-        public MovieModel createFromParcel(Parcel in) {
-            return new MovieModel(in);
-        }
-
-        @Override
-        public MovieModel[] newArray(int size) {
-            return new MovieModel[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(popularity);
-        parcel.writeString(voteCount);
-        parcel.writeString(video);
-        parcel.writeString(posterPath);
-        parcel.writeString(id);
-        parcel.writeString(adult);
-        parcel.writeString(backdropPath);
-        parcel.writeString(originalLanguage);
-        parcel.writeString(originalTitle);
-        parcel.writeString(title);
-        parcel.writeString(voteAverage);
-        parcel.writeString(overview);
-        parcel.writeString(releaseDate);
     }
 }
