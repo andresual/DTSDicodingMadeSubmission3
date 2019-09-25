@@ -18,6 +18,9 @@ public class TvModel implements Parcelable {
     private String overview;
     private String posterPath;
 
+    public TvModel() {
+    }
+
     public String getOriginalName() {
         return originalName;
     }

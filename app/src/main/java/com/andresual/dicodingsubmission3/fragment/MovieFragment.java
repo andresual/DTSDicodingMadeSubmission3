@@ -3,6 +3,7 @@ package com.andresual.dicodingsubmission3.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -10,7 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.andresual.dicodingsubmission3.R;
+import com.andresual.dicodingsubmission3.adapter.MovieAdapter;
 import com.andresual.dicodingsubmission3.controller.CinemaController;
+import com.andresual.dicodingsubmission3.model.MovieModel;
+
+import java.util.ArrayList;
 
 public class MovieFragment extends Fragment {
 
@@ -32,13 +37,16 @@ public class MovieFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
         rvMovie = view.findViewById(R.id.rv_movie);
+        rvMovie.setHasFixedSize(true);
 
-        fetchMovieData();
+        CinemaController.getInstance().fetchMovieData(this);
 
         return view;
     }
 
-    public void fetchMovieData() {
-        CinemaController.getInstance().fetchMovieData(this);
+    public void fetchMovieData(ArrayList<MovieModel> movieModelArrayList) {
+        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
+        MovieAdapter movieAdapter = new MovieAdapter(getActivity(), movieModelArrayList);
+        rvMovie.setAdapter(movieAdapter);
     }
 }
