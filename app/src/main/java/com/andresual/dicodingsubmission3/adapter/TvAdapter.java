@@ -73,12 +73,16 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ListViewHolder> {
             @Override
             public void onClick(View view) {
                 TvModel tvModel = new TvModel();
-                tvModel.setName(tvModelArrayList.get(position).getName());
+                tvModel.setId(tvModelArrayList.get(position).getId());
+                tvModel.setOriginalName(tvModelArrayList.get(position).getOriginalName());
+                tvModel.setPopularity(tvModelArrayList.get(position).getPopularity());
+                tvModel.setVoteAverage(tvModelArrayList.get(position).getVoteAverage());
                 tvModel.setFirstAirDate(tvModelArrayList.get(position).getFirstAirDate());
-//                movieModel.getPosterPath(movieModelArrayList.get(position).getPosterPath());
+                tvModel.setOverview(tvModelArrayList.get(position).getOverview());
+                tvModel.setPosterPath(tvModelArrayList.get(position).getPosterPath());
                 Intent moveWithObjectIntent = new Intent(context, DetailActivity.class);
                 moveWithObjectIntent.putExtra("code", "2");
-                moveWithObjectIntent.putExtra(DetailActivity.EXTRA_MOVIE, tvModel);
+                moveWithObjectIntent.putExtra(DetailActivity.EXTRA_TV, tvModel);
                 context.startActivity(moveWithObjectIntent);
             }
         });
