@@ -77,6 +77,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ListViewHolder> {
                 tvModel.setFirstAirDate(tvModelArrayList.get(position).getFirstAirDate());
 //                movieModel.getPosterPath(movieModelArrayList.get(position).getPosterPath());
                 Intent moveWithObjectIntent = new Intent(context, DetailActivity.class);
+                moveWithObjectIntent.putExtra("code", "2");
                 moveWithObjectIntent.putExtra(DetailActivity.EXTRA_MOVIE, tvModel);
                 context.startActivity(moveWithObjectIntent);
             }

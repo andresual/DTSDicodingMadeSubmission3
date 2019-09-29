@@ -1,18 +1,85 @@
 package com.andresual.dicodingsubmission3.ui;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-
 import com.andresual.dicodingsubmission3.R;
+import com.andresual.dicodingsubmission3.api.apis;
+import com.andresual.dicodingsubmission3.model.MovieModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE = "extra_movie";
+    public static final String EXTRA_TV = "extra_tv";
+    private CollapsingToolbarLayout collapsing;
+    private ImageView imgMovie;
+    private FloatingActionButton btnFav;
+    private TextView tvPopularity1;
+    private TextView tvVoteAverage1;
+    private TextView tvReleaseDate1;
+    private TextView textView5;
+    private TextView tvDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+//        setContentView(R.layout.activity_detail_movie);
+
+        if (this.getIntent().getStringExtra("code").equals("1")) {
+            setContentView(R.layout.activity_detail_movie);
+            initViewMovie();
+        } else if (this.getIntent().getStringExtra("code").equals("2")) {
+            setContentView(R.layout.activity_main);
+        }
+
+    }
+
+    public void initViewMovie() {
+
+        collapsing = findViewById(R.id.collapsing);
+        imgMovie = findViewById(R.id.img_movie);
+        btnFav = findViewById(R.id.btn_fav);
+        tvPopularity1 = findViewById(R.id.tv_popularity1);
+        tvVoteAverage1 = findViewById(R.id.tv_vote_average1);
+        tvReleaseDate1 = findViewById(R.id.tv_release_date1);
+        textView5 = findViewById(R.id.tv_adult1);
+        tvDesc = findViewById(R.id.tv_desc);
+
+        MovieModel movieModel = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        collapsing.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
+        collapsing.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        assert movieModel != null;
+        collapsing.setTitle(movieModel.getTitle());
+
+        Glide.with(this)
+                .load(apis.base_img_url+movieModel.getPosterPath())
+                .apply(new RequestOptions())
+                .into(imgMovie);
+
+        tvPopularity1.setText(movieModel.getPopularity());
+        tvVoteAverage1.setText(movieModel.getVoteAverage());
+        tvReleaseDate1.setText(movieModel.getReleaseDate());
+
+        if (movieModel.getAdult().equals("false")) {
+            textView5.setVisibility(View.INVISIBLE);
+        }
+
+        tvDesc.setText(movieModel.getOverview());
+
+        btnFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DetailActivity.this, "BeLom bisa, tunggu sapmisen 4", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

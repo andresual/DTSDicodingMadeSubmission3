@@ -24,14 +24,14 @@ import java.util.ArrayList;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ListViewHolder> {
 
     private ArrayList<MovieModel> movieModelArrayList;
-    Context context;
+    private Context context;
 
     public MovieAdapter(Context context, ArrayList<MovieModel> movieAdapterArrayList) {
         this.movieModelArrayList = movieAdapterArrayList;
         this.context = context;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder {
+    class ListViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
         TextView tvYear;
@@ -39,7 +39,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ListViewHold
         ImageView ivMovie;
         CardView cvMovie;
 
-        public ListViewHolder(@NonNull View view) {
+        ListViewHolder(@NonNull View view) {
             super(view);
             tvTitle = view.findViewById(R.id.tv_title);
             tvYear = view.findViewById(R.id.tv_year);
@@ -73,10 +73,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ListViewHold
             @Override
             public void onClick(View view) {
                 MovieModel movieModel = new MovieModel();
+                movieModel.setId(movieModelArrayList.get(position).getId());
                 movieModel.setTitle(movieModelArrayList.get(position).getTitle());
+                movieModel.setPopularity(movieModelArrayList.get(position).getPopularity());
+                movieModel.setVoteAverage(movieModelArrayList.get(position).getVoteAverage());
                 movieModel.setReleaseDate(movieModelArrayList.get(position).getReleaseDate());
-//                movieModel.getPosterPath(movieModelArrayList.get(position).getPosterPath());
+                movieModel.setAdult(movieModelArrayList.get(position).getAdult());
+                movieModel.setOverview(movieModelArrayList.get(position).getOverview());
+                movieModel.setPosterPath(movieModelArrayList.get(position).getPosterPath());
                 Intent moveWithObjectIntent = new Intent(context, DetailActivity.class);
+                moveWithObjectIntent.putExtra("code", "1");
                 moveWithObjectIntent.putExtra(DetailActivity.EXTRA_MOVIE, movieModel);
                 context.startActivity(moveWithObjectIntent);
             }
