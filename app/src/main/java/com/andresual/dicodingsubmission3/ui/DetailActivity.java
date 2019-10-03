@@ -17,6 +17,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Objects;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE = "extra_movie";
@@ -27,18 +29,16 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvPopularity1;
     private TextView tvVoteAverage1;
     private TextView tvReleaseDate1;
-    private TextView textView5;
     private TextView tvDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_detail_movie);
 
-        if (this.getIntent().getStringExtra("code").equals("1")) {
+        if (Objects.equals(this.getIntent().getStringExtra("code"), "1")) {
             setContentView(R.layout.activity_detail_movie);
             initViewMovie();
-        } else if (this.getIntent().getStringExtra("code").equals("2")) {
+        } else if (Objects.equals(this.getIntent().getStringExtra("code"), "2")) {
             setContentView(R.layout.activity_detail_tv);
             initViewTv();
         }
@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         tvPopularity1 = findViewById(R.id.tv_popularity1);
         tvVoteAverage1 = findViewById(R.id.tv_vote_average1);
         tvReleaseDate1 = findViewById(R.id.tv_release_date1);
-        textView5 = findViewById(R.id.tv_adult1);
+        TextView textView5 = findViewById(R.id.tv_adult1);
         tvDesc = findViewById(R.id.tv_desc);
 
         MovieModel movieModel = getIntent().getParcelableExtra(EXTRA_MOVIE);

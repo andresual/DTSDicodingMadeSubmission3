@@ -3,23 +3,28 @@ package com.andresual.dicodingsubmission3.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.andresual.dicodingsubmission3.R;
 import com.andresual.dicodingsubmission3.adapter.MovieAdapter;
-import com.andresual.dicodingsubmission3.controller.CinemaController;
 import com.andresual.dicodingsubmission3.model.MovieModel;
+import com.andresual.dicodingsubmission3.util.MainViewModel;
 
 import java.util.ArrayList;
 
 public class MovieFragment extends Fragment {
 
-    RecyclerView rvMovie;
+    private MovieAdapter movieAdapter;
+    private ProgressBar progressBar;
 
     public MovieFragment() {
         // Required empty public constructor
@@ -36,17 +41,38 @@ public class MovieFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
-        rvMovie = view.findViewById(R.id.rv_movie);
+        progressBar = view.findViewById(R.id.progressBar);
+        RecyclerView rvMovie = view.findViewById(R.id.rv_movie);
+        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
+        movieAdapter = new MovieAdapter(getActivity());
         rvMovie.setHasFixedSize(true);
+        movieAdapter.notifyDataSetChanged();
+        rvMovie.setAdapter(movieAdapter);
 
-        CinemaController.getInstance().fetchMovieData(this);
+        MainViewModel mainViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainViewModel.class);
 
+        mainViewModel.getMovieList().observe(this, new Observer<ArrayList<MovieModel>>() {
+            @Override
+            public void onChanged(ArrayList<MovieModel> movieModels) {
+                if (movieModels != null) {
+                    Log.i("onChanged: ", movieModels.toString());
+                    movieAdapter.setData(movieModels);
+                    showLoading(false);
+                }
+            }
+        });
+
+        mainViewModel.setMovieList(MovieFragment.this);
+        showLoading(true);
         return view;
     }
 
-    public void fetchMovieData(ArrayList<MovieModel> movieModelArrayList) {
-        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
-        MovieAdapter movieAdapter = new MovieAdapter(getActivity(), movieModelArrayList);
-        rvMovie.setAdapter(movieAdapter);
+    private void showLoading(Boolean state) {
+
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

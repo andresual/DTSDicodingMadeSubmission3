@@ -23,15 +23,20 @@ import java.util.ArrayList;
 
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ListViewHolder> {
 
-    private ArrayList<TvModel> tvModelArrayList;
-    Context context;
+    private ArrayList<TvModel> mData = new ArrayList<>();
+    private Context context;
 
-    public TvAdapter(Context context, ArrayList<TvModel> tvModelArrayList) {
-        this.tvModelArrayList = tvModelArrayList;
+    public TvAdapter(Context context) {
         this.context = context;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder {
+    public void setData(ArrayList<TvModel> items) {
+        mData.clear();
+        mData.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    class ListViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
         TextView tvYear;
@@ -39,7 +44,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ListViewHolder> {
         ImageView ivTv;
         CardView cvTv;
 
-        public ListViewHolder(@NonNull View view) {
+        ListViewHolder(@NonNull View view) {
             super(view);
             tvTitle = view.findViewById(R.id.tv_title);
             tvYear = view.findViewById(R.id.tv_year);
@@ -58,7 +63,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ListViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final TvAdapter.ListViewHolder holder, final int position) {
-        TvModel tvModel = tvModelArrayList.get(position);
+        TvModel tvModel = mData.get(position);
 
         holder.tvTitle.setText(tvModel.getName());
         holder.tvAverage.setText(tvModel.getVoteAverage());
@@ -73,13 +78,13 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ListViewHolder> {
             @Override
             public void onClick(View view) {
                 TvModel tvModel = new TvModel();
-                tvModel.setId(tvModelArrayList.get(position).getId());
-                tvModel.setOriginalName(tvModelArrayList.get(position).getOriginalName());
-                tvModel.setPopularity(tvModelArrayList.get(position).getPopularity());
-                tvModel.setVoteAverage(tvModelArrayList.get(position).getVoteAverage());
-                tvModel.setFirstAirDate(tvModelArrayList.get(position).getFirstAirDate());
-                tvModel.setOverview(tvModelArrayList.get(position).getOverview());
-                tvModel.setPosterPath(tvModelArrayList.get(position).getPosterPath());
+                tvModel.setId(mData.get(position).getId());
+                tvModel.setOriginalName(mData.get(position).getOriginalName());
+                tvModel.setPopularity(mData.get(position).getPopularity());
+                tvModel.setVoteAverage(mData.get(position).getVoteAverage());
+                tvModel.setFirstAirDate(mData.get(position).getFirstAirDate());
+                tvModel.setOverview(mData.get(position).getOverview());
+                tvModel.setPosterPath(mData.get(position).getPosterPath());
                 Intent moveWithObjectIntent = new Intent(context, DetailActivity.class);
                 moveWithObjectIntent.putExtra("code", "2");
                 moveWithObjectIntent.putExtra(DetailActivity.EXTRA_TV, tvModel);
@@ -90,6 +95,6 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ListViewHolder> {
 
     @Override
     public int getItemCount() {
-        return tvModelArrayList.size();
+        return mData.size();
     }
 }

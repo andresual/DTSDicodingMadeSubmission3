@@ -21,44 +21,31 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ListViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private ArrayList<MovieModel> movieModelArrayList;
+    private ArrayList<MovieModel> mData = new ArrayList<>();
     private Context context;
 
-    public MovieAdapter(Context context, ArrayList<MovieModel> movieAdapterArrayList) {
-        this.movieModelArrayList = movieAdapterArrayList;
+    public MovieAdapter(Context context) {
         this.context = context;
     }
 
-    class ListViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvTitle;
-        TextView tvYear;
-        TextView tvAverage;
-        ImageView ivMovie;
-        CardView cvMovie;
-
-        ListViewHolder(@NonNull View view) {
-            super(view);
-            tvTitle = view.findViewById(R.id.tv_title);
-            tvYear = view.findViewById(R.id.tv_year);
-            ivMovie = view.findViewById(R.id.iv_hero);
-            cvMovie = view.findViewById(R.id.cv_item);
-            tvAverage = view.findViewById(R.id.tv_vote_avg);
-        }
+    public void setData(ArrayList<MovieModel> items) {
+        mData.clear();
+        mData.addAll(items);
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public MovieAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_movie, viewGroup, false);
-        return new ListViewHolder(view);
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_movie, parent, false);
+        return new MovieViewHolder(mView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MovieAdapter.ListViewHolder holder, final int position) {
-        MovieModel movieModel = movieModelArrayList.get(position);
+    public void onBindViewHolder(@NonNull MovieViewHolder holder, final int position) {
+        MovieModel movieModel = mData.get(position);
 
         holder.tvTitle.setText(movieModel.getTitle());
         holder.tvAverage.setText(movieModel.getVoteAverage());
@@ -73,14 +60,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ListViewHold
             @Override
             public void onClick(View view) {
                 MovieModel movieModel = new MovieModel();
-                movieModel.setId(movieModelArrayList.get(position).getId());
-                movieModel.setTitle(movieModelArrayList.get(position).getTitle());
-                movieModel.setPopularity(movieModelArrayList.get(position).getPopularity());
-                movieModel.setVoteAverage(movieModelArrayList.get(position).getVoteAverage());
-                movieModel.setReleaseDate(movieModelArrayList.get(position).getReleaseDate());
-                movieModel.setAdult(movieModelArrayList.get(position).getAdult());
-                movieModel.setOverview(movieModelArrayList.get(position).getOverview());
-                movieModel.setPosterPath(movieModelArrayList.get(position).getPosterPath());
+                movieModel.setId(mData.get(position).getId());
+                movieModel.setTitle(mData.get(position).getTitle());
+                movieModel.setPopularity(mData.get(position).getPopularity());
+                movieModel.setVoteAverage(mData.get(position).getVoteAverage());
+                movieModel.setReleaseDate(mData.get(position).getReleaseDate());
+                movieModel.setAdult(mData.get(position).getAdult());
+                movieModel.setOverview(mData.get(position).getOverview());
+                movieModel.setPosterPath(mData.get(position).getPosterPath());
                 Intent moveWithObjectIntent = new Intent(context, DetailActivity.class);
                 moveWithObjectIntent.putExtra("code", "1");
                 moveWithObjectIntent.putExtra(DetailActivity.EXTRA_MOVIE, movieModel);
@@ -91,6 +78,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ListViewHold
 
     @Override
     public int getItemCount() {
-        return movieModelArrayList.size();
+        return mData.size();
+    }
+
+    class MovieViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvTitle;
+        TextView tvYear;
+        TextView tvAverage;
+        ImageView ivMovie;
+        CardView cvMovie;
+
+        MovieViewHolder(@NonNull View view) {
+            super(view);
+            tvTitle = view.findViewById(R.id.tv_title);
+            tvYear = view.findViewById(R.id.tv_year);
+            ivMovie = view.findViewById(R.id.iv_hero);
+            cvMovie = view.findViewById(R.id.cv_item);
+            tvAverage = view.findViewById(R.id.tv_vote_avg);
+        }
     }
 }
