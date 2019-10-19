@@ -9,4 +9,5 @@
     <string name="release_date">Tanggal Rilis</string>
     <string name="vote_count">Jumlah Vote</string>
     <string name="loading_start">Memuat data...</string>
+    <string name="main_favorite">Favorit</string>
 </resources>

@@ -19,6 +19,22 @@ public class MovieModel implements Parcelable {
     private String overview;
     private String releaseDate;
 
+    public MovieModel(String popularity, String voteCount, String video, String posterPath, String id, String adult, String backdropPath, String originalLanguage, String originalTitle, String title, String voteAverage, String overview, String releaseDate) {
+        this.popularity = popularity;
+        this.voteCount = voteCount;
+        this.video = video;
+        this.posterPath = posterPath;
+        this.id = id;
+        this.adult = adult;
+        this.backdropPath = backdropPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.title = title;
+        this.voteAverage = voteAverage;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+    }
+
     public MovieModel() {
     }
 

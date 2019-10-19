@@ -21,6 +21,21 @@ public class TvModel implements Parcelable {
     public TvModel() {
     }
 
+    public TvModel(String originalName, String name, String popularity, String originCountry, String voteCount, String firstAirDate, String backdropPath, String originalLanguage, String id, String voteAverage, String overview, String posterPath) {
+        this.originalName = originalName;
+        this.name = name;
+        this.popularity = popularity;
+        this.originCountry = originCountry;
+        this.voteCount = voteCount;
+        this.firstAirDate = firstAirDate;
+        this.backdropPath = backdropPath;
+        this.originalLanguage = originalLanguage;
+        this.id = id;
+        this.voteAverage = voteAverage;
+        this.overview = overview;
+        this.posterPath = posterPath;
+    }
+
     public String getOriginalName() {
         return originalName;
     }

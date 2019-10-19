@@ -12,8 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.DetailActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+        <activity android:name=".ui.FavoriteActivity"></activity>
+        <activity
+            android:name=".ui.DetailActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,4 +24,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
